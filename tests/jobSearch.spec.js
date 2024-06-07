@@ -1,31 +1,27 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 const { chromium } = require('playwright');
+const SearchBoxPage = require('./pageObjects/searchBoxPage');
 
-test('Verify whether Search for playwright job is possible in the Seek page', async ({ page }) => {
-  const browser = await chromium.launch();
-  page = await browser.newPage();
-  await page.goto('/');
-  await page.waitForSelector('input[id="keywords-input"]');
-  const input = await page.$('input[id="keywords-input"]');
+test.describe('Search functionality', () => {
+  let searchPage;
 
-  if(input){
-    await input.fill("Playwright");
-    await page.click('#searchButton');
-  } 
+  test.beforeEach(async ({ page }) => {
+    searchPage = new SearchBoxPage(page); // Instantiate the SearchBoxPage class with the current page
+    await page.goto('/');
+  });
 
-  await page.waitForSelector('span[data-automation="totalJobsCount"]');
-  const totalCount = await page.$('span[data-automation="totalJobsCount"]');
-
-  if(totalCount){
-
-    const signInText = await totalCount.textContent();
-    if(signInText){
-        console.log("Print the search results value::"+signInText)
-        const totalCountValue = parseInt(signInText); // Convert text content to a number
-        expect(totalCountValue).not.toBe(0);
-    }
-  }
-  await page.close();
+  test('Verify whether Search for playwright job is possible in the Seek page', async ({ page }) => {
+    const searchPage = new SearchBoxPage(page);
+    const browser = await chromium.launch();
+    page = await browser.newPage();
+    await searchPage.typeSearchQuery("playwright");
+    await searchPage.clickSearchButton();
+    const totalCount = await searchPage.getJobsCountHeader();
+    console.log("What is the count we getting::"+totalCount);
+    const totalCountValue = parseInt(totalCount);
+    expect(totalCountValue).toBeGreaterThan(0);
+    await page.close();
+  });
+  
 });
-
