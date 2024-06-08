@@ -17,12 +17,10 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
+    - name: Run Playwright tests with Jest
       run: |
-        npx playwright test | while IFS= read -r line; do
-          echo "::debug::$line"
-          echo "$line"
-        done
+        npm install --save-dev jest jest-playwright-preset
+        npx jest
     - uses: actions/upload-artifact@v4
       if: always()
       with:
