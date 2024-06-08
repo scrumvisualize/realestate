@@ -19,7 +19,10 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: |
-        npx playwright test | tee playwright-test.log
+        npx playwright test | while IFS= read -r line; do
+          echo "::debug::$line"
+          echo "$line"
+        done
     - uses: actions/upload-artifact@v4
       if: always()
       with:
