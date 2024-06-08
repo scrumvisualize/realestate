@@ -45,6 +45,7 @@ class SearchBoxPage {
     }
     
     async selectClassificationByText(checkboxText) {
+        
         const element = `${this.classificationTypeSelector}:text("${checkboxText}")`;
         const checkbox = await this.page.locator(element);
         await checkbox.check();
