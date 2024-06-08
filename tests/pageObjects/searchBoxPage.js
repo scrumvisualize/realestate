@@ -9,7 +9,10 @@ class SearchBoxPage {
         this.classificationTypeSelector = 'a span[data-automation="item-text"]';
         this.whereBoxSelector = 'input[id="SearchBar__Where"]';
         this.searchBtnLocator = 'button[data-automation="searchButton"]';
-        
+        this.moreOptionsLocator = 'button[data-automation="moreOptionsButton"] span>span';
+        this.searchWorkTypesLocator = 'label[data-automation="toggleWorkTypePanel"]';
+        this.searchWorkTypesOptionLocator = 'div[data-automation="refineWorkType"] ul > li > span > a span';
+        this.selectedWorkTypeLocator = 'label[data-automation="toggleWorkTypePanel"] div > span > span span'
     }
 
     async typeSearchQuery(query) {
@@ -42,13 +45,8 @@ class SearchBoxPage {
     }
     
     async selectClassificationByText(checkboxText) {
-        // Construct the selector dynamically using the provided checkbox text
         const element = `${this.classificationTypeSelector}:text("${checkboxText}")`;
-    
-        // Locate the checkbox element using the constructed selector
         const checkbox = await this.page.locator(element);
-    
-        // Check the checkbox
         await checkbox.check();
     }
 
@@ -58,9 +56,32 @@ class SearchBoxPage {
     }
 
     async getSearchButton() {
-        await this.page.click(this.searchBtnLocator); // Click the search button
+        const searchButton = await this.page.locator(this.searchBtnLocator);
+        return searchButton;
     }
 
+    async getWorkTypesDropdown() {
+        const workTypesDropdown = await this.page.locator(this.searchWorkTypesLocator);
+        return workTypesDropdown;
+    }
+
+    async getWorkTypesOption(optiontext) {
+        const element = `${this.searchWorkTypesOptionLocator}:text("${optiontext}")`;
+        const option = await this.page.locator(element);
+        return option;
+    }
+
+    async getMoreOptionsButton() {
+        const element = `${this.moreOptionsLocator}:text("More options")`;
+        const moreOptionsBtn = await this.page.locator(element);
+        await moreOptionsBtn.click();
+    }
+
+    async getSelectedWorkTypeOption() {
+        const workTypeOption = await this.page.locator(this.selectedWorkTypeLocator);
+        const textValue = workTypeOption.textContent();
+        return textValue;
+    }
 
 }
 
