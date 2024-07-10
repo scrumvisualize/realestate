@@ -1,9 +1,9 @@
-name: Scheduled 11:16 PM Playwright e2e Test run
+name: Scheduled 12:00 AM Playwright e2e Test run
 
 on:
   schedule:
     # Runs at 10:35 PM Brisbane time (AEST is UTC+10)
-    - cron: '16 13 * * *' # This is UTC time; 10:35 PM AEST is 12:35 PM UTC
+    - cron: '0 14* * *' # This is UTC time; 10:35 PM AEST is 12:35 PM UTC
 
 jobs:
   trigger_playwright:
@@ -14,8 +14,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { github } = require('@actions/github');
-
             async function run() {
               try {
                 await github.getOctokit(process.env.GITHUB_TOKEN).actions.createWorkflowDispatch({
