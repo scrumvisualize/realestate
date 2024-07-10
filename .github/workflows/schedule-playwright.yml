@@ -1,9 +1,9 @@
-name: Scheduled 12:00 AM Playwright e2e Test run
+name: Scheduled 12:40 AM Playwright e2e Test run
 
 on:
   schedule:
-    # Runs at 12:00 AM Brisbane time (AEST is UTC+10)
-    - cron: '0 14 * * *' # This is UTC time; 12:00 AM, AEST is 2:00 PM UTC
+    # Runs at 12:40 AM Brisbane time (AEST is UTC+10)
+    - cron: '40 14 * * *' # This is UTC time; 12:40 AM, AEST is 2:40 PM UTC
 
 jobs:
   trigger_playwright:
@@ -16,13 +16,14 @@ jobs:
           script: |
             async function run() {
               try {
-                await github.getOctokit(process.env.GITHUB_TOKEN).actions.createWorkflowDispatch({
-                  owner: github.context.repo.owner,
-                  repo: github.context.repo.repo,
+                const response = await github.rest.actions.createWorkflowDispatch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
                   workflow_id: 'playwright.yml',
                   ref: 'main'
                 });
                 console.log('Workflow dispatched successfully');
+                console.log(response);
               } catch (error) {
                 console.error('Error dispatching workflow:', error);
               }
