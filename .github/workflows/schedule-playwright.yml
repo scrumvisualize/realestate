@@ -1,9 +1,9 @@
-name: Scheduled 10:15 AM Playwright e2e Test run
+name: Scheduled 12:15 PM Playwright e2e Test run
 
 on:
   schedule:
-    # Runs at 10:15 AM Brisbane time (AEST is UTC+10)
-    - cron: '15 0 * * *' # This is UTC time; 10:15 AM, AEST is 00:15 PM UTC
+    # Runs at 12:15 PM Brisbane time (AEST is UTC+10)
+    - cron: '15 2 * * *' # This is UTC time; 12:15 PM, AEST is 02:15 AM UTC
 
 jobs:
   trigger_playwright:
@@ -12,7 +12,7 @@ jobs:
       - name: Trigger Playwright e2e Tests workflow
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_GITHUB }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
