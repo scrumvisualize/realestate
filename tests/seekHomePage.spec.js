@@ -38,3 +38,25 @@ test('Verify whether the Seek website has Sign In button in the top right of the
   }
     await page.close();
 });
+
+test('Verify whether the Seek website has Employer Site link in the top right of the page @employersite', async ({ page }) => {
+  const browser = await chromium.launch();
+  page = await browser.newPage();
+  await page.goto('/');
+  const employerLink = await page.$('a[data-automation="employers_link"] span');
+
+  if (employerLink) {
+    // Retrieve the text content of the <a> tag
+    const employerLinkText = await employerLink.textContent();
+
+    // Print the retrieved text content
+    console.log('Link text:', employerLinkText);
+
+    // Assert the text content matches "Sign in"
+    const expectedText = 'Employer site';
+    await expect(employerLinkText).toEqual(expectedText);
+  } else {
+    console.error('Employer link not found.');
+  }
+    await page.close();
+});

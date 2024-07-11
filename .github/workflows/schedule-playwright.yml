@@ -1,9 +1,9 @@
-name: Scheduled 1:15 PM Playwright e2e Test run
+name: Scheduled 9:00 AM Playwright e2e Test run
 
 on:
   schedule:
-    # Runs at 1:15 PM Brisbane time (AEST is UTC+10)
-    - cron: '15 3 * * *' # This is UTC time; 1:15 PM, AEST is 03:15 AM UTC
+    # Runs at 9:00 AM Brisbane time (AEST is UTC+10)
+    - cron: '0 23 * * *' # This is UTC time; 9:00 AM, AEST is 23:00 PM UTC
 
 jobs:
   trigger_playwright:
