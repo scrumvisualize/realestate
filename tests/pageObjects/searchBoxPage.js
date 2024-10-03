@@ -6,7 +6,7 @@ class SearchBoxPage {
         this.searchButtonLocator = 'button[id="searchButton"]'; // CSS selector for the search button
         this.totalJobsCountLocator = 'span[data-automation="totalJobsCount"]'; // CSS selector for the jobs count
         this.classificationFieldLocator = 'label[data-automation="classificationDropDownList"]'; // CSS selector for the jobs count
-        this.classificationTypeSelector = 'a span[data-automation="item-text"]';
+        this.classificationTypeSelector = 'a span[data-automation="item-text"]'; //classificationDropDownList
         this.whereBoxSelector = 'input[id="SearchBar__Where"]';
         this.searchBtnLocator = 'button[data-automation="searchButton"]';
         this.moreOptionsLocator = 'button[data-automation="moreOptionsButton"] span>span';
